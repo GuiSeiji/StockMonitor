@@ -5,8 +5,9 @@ import pandas as pd
 #import time
 #import datetime as dt
 
-#import yfinance as yf
-import talib
+from stockstats import StockDataFrame as sdf
+import yfinance as yf
+
 
 #from sklearn.model_selection import train_test_split
 #from sklearn.ensemble import RandomForestClassifier
@@ -92,7 +93,7 @@ def get_EMA(df, window):
 
 def get_RSI(df, window = 14):
     sma = df['Close'].rolling(window).mean()
-    rsi = talib.RSI(df['Close'].values, timeperiod=window)
+    rsi = df.ta.rsi(close='Adj Close',append=True,length=14)
 
     trend = 0 * sma
     trend[rsi < 30] = 1
@@ -183,43 +184,17 @@ def get_CHAI(df):
 def get_ADX(data, adx_period=14, adx_threshold=25):
 
     df = data.copy()
-    # Calcula o True Range (TR) para cada dia
-    df['TR'] = np.nan
-    df['TR'] = np.maximum(df['High'] - df['Low'], df['High'] - df['Close'].shift(1))
-    df['TR'] = np.maximum(df['TR'], df['Close'].shift(1) - df['Low'])
+    stock_df = sdf.retype(df)
+    df['pdi'] = stock_df['pdi']
+    df['adx'] = stock_df['adx']
+    df['ndi'] = stock_df['ndi']
 
-    # Calcula o Directional Movement (DM) para cada dia
-    df['DMplus'] = np.nan
-    df['DMminus'] = np.nan
-    df['DMplus'] = np.where((df['High'] - df['High'].shift(1)) > (df['Low'].shift(1) - df['Low']),
-                            df['High'] - df['High'].shift(1), 0)
-    df['DMminus'] = np.where((df['Low'].shift(1) - df['Low']) > (df['High'] - df['High'].shift(1)),
-                             df['Low'].shift(1) - df['Low'], 0)
+    adx = df['adx']
+    pdi = df['pdi']
+    ndi = df['ndi']
 
-    # Calcula o True Directional Indicator (DI) para cada dia
-    df['DIplus'] = np.nan
-    df['DIminus'] = np.nan
-    df['DIplus'] = 100 * (df['DMplus'].rolling(window=14).sum() / df['TR'].rolling(window = adx_period).sum())
-    df['DIminus'] = 100 * (df['DMminus'].rolling(window=14).sum() / df['TR'].rolling(window = adx_period).sum())
-
-    # Calcula o Average Directional Index (ADX) para cada dia
-    df['DX'] = np.nan
-    df['DX'] = 100 * np.abs((df['DIplus'] - df['DIminus']) / (df['DIplus'] + df['DIminus']))
-    df['adx'] = np.nan
-    df['adx'] = df['DX'].rolling(window=14).mean()
-
-    #########################################################
-
-    adx = talib.ADX(df['High'], df['Low'], df['Close'], timeperiod=adx_period)
-    plus_di = talib.PLUS_DI(df['High'], df['Low'], df['Close'], timeperiod=adx_period)
-    minus_di = talib.MINUS_DI(df['High'], df['Low'], df['Close'], timeperiod=adx_period)
-
-    df['adx'] = adx
-    df['PlusDI'] = plus_di
-    df['MinusDI'] = minus_di
-
-    df.loc[(adx > adx_threshold) & (plus_di > minus_di), 'adx_t'] = 1
-    df.loc[(adx > adx_threshold) & (plus_di < minus_di), 'adx_t'] = -1
+    df.loc[(adx > adx_threshold) & (pdi > ndi), 'adx_t'] = 1
+    df.loc[(adx > adx_threshold) & (pdi < ndi), 'adx_t'] = -1
     df.loc[adx <= adx_threshold, 'adx_t'] = 0
 
     return df[['adx',  'adx_t']]
