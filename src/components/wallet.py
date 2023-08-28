@@ -5,7 +5,7 @@ import json
 from src.tvdatafeed_lib import TvDatafeed
 
 from src.components.modal import *
-from src.index import *
+from src.app import *
 
 tv = TvDatafeed()
 

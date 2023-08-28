@@ -1,7 +1,7 @@
 from dash import dcc, Input, Output, no_update, callback_context
 from datetime import date
 
-from src.index import *
+from src.app import *
 
 layout = dbc.Modal([
     dbc.ModalHeader(dbc.ModalTitle("Cadastro de ativos"), className='modal_header'),
