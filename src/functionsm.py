@@ -19,7 +19,7 @@ from src.tvdatafeed_lib import TvDatafeed, Interval
 import logging
 import pickle
 
-logging.basicConfig(filename='../Resultados/Registro.log', level=logging.INFO,
+logging.basicConfig(filename='Resultados/Registro.log', level=logging.INFO,
                     format='%(asctime)s - %(message)s', datefmt = '%m-%d %H:%M')
 
 logging.getLogger("yfinance").setLevel(logging.INFO)
@@ -422,7 +422,7 @@ def recursive_test(features):
             Y = data['profit2_t']
             X = data[list(selected_features)]
             x_train, x_test, y_train, y_test = split_custom(X,Y)
-            results_f = pd.read_csv('../Resultados/Resultado.csv')
+            results_f = pd.read_csv('Resultados/Resultado.csv')
 
             norm_op = True
             if norm_op:
@@ -494,8 +494,8 @@ def recursive_test(features):
             results_f = pd.concat([results_f, results]).reset_index(drop=True)
             results_f.to_csv('Resultados/Resultado.csv', index=False)
 
-        results_f = pd.read_csv('../Resultados/Resultado.csv')
-        modelos_salvos = pd.read_csv('../Resultados/Modelos_Salvos/Modelos_Salvos.csv')
+        results_f = pd.read_csv('Resultados/Resultado.csv')
+        modelos_salvos = pd.read_csv('Resultados/Modelos_Salvos/Modelos_Salvos.csv')
 
         """
         best_model = inter[inter['Accuracy'] == inter['Accuracy'].max()]['Model'].values[0]
@@ -560,7 +560,7 @@ def pred_ac(model_name, ativo = 'PETR3'):
         model = pickle.load(file)
 
     # Abre as informações dos modelos salvos
-    modelos_salvos = pd.read_csv('../Resultados/Modelos_Salvos/Modelos_Salvos.csv')
+    modelos_salvos = pd.read_csv('Resultados/Modelos_Salvos/Modelos_Salvos.csv')
     features = (modelos_salvos.loc[(modelos_salvos['Model_Name'] == model_name), 'Selected_Features'].values[0]).split(', ')
     intervalo = modelos_salvos.loc[(modelos_salvos['Model_Name'] == model_name), 'Intervalo'].values[0]
 

@@ -1,7 +1,7 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from components import modal
+from src.components import modal
 
 layout = dbc.Container([
     dbc.Row([

@@ -4,7 +4,7 @@ import pandas as pd
 import json
 from src.tvdatafeed_lib import TvDatafeed
 
-from components.modal import *
+from src.components.modal import *
 from src.app import *
 
 tv = TvDatafeed()
