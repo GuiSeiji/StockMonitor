@@ -5,7 +5,6 @@ from components import home, header, wallet, indicadores
 from functions import *
 from src.app import *
 
-
 # Funções =======================================
 # Checando se o book de transações existe
 ativos_org2 = {}
