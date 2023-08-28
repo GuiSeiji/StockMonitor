@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 
 from src.menu_styles import *
 from src.functions import *
-from src.app import *
+from src.index import *
 
 
 layout = dbc.Container([

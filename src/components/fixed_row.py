@@ -1,4 +1,4 @@
-from src.app import *
+from src.index import *
 
 layout = dbc.Container([
 

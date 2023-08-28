@@ -3,7 +3,16 @@ from dash.dependencies import Input, Output, State
 
 from components import home, header, wallet, indicadores
 from functions import *
-from src.app import *
+import dash_bootstrap_components as dbc
+import dash
+
+estilos = ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons"]
+
+app = dash.Dash(external_stylesheets= estilos + [dbc.themes.BOOTSTRAP])
+
+app.config['suppress_callback_exceptions'] = True
+app.scripts.config.serve_locally = True
+server = app.server
 
 # Funções =======================================
 # Checando se o book de transações existe
