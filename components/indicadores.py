@@ -1,12 +1,12 @@
 from dash import html, dcc, Input, Output, State
 import plotly.graph_objects as go
 
-from menu_styles import *
-from functions import *
-from functionsm import *
+from src.menu_styles import *
+from src.functions import *
+from src.functionsm import *
 from src.app import *
 
-from tvdatafeed_lib.main import TvDatafeed, Interval
+from src.tvdatafeed_lib import TvDatafeed, Interval
 
 layout = dbc.Container([
     dbc.Row([

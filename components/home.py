@@ -1,8 +1,8 @@
 from dash import html, dcc, Input, Output, State, no_update
 import plotly.graph_objects as go
 
-from menu_styles import *
-from functions import *
+from src.menu_styles import *
+from src.functions import *
 from src.app import *
 
 

@@ -2,7 +2,7 @@ from dash import html
 from dash.dependencies import State, ALL
 import pandas as pd
 import json
-from tvdatafeed_lib.main import TvDatafeed
+from src.tvdatafeed_lib import TvDatafeed
 
 from components.modal import *
 from src.app import *

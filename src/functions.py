@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from pandas.tseries.offsets import DateOffset
 from datetime import date
-from tvdatafeed_lib.main import TvDatafeed
+from src.tvdatafeed_lib import TvDatafeed
 
 #offsets são deltas entre a data atual e o valor inserido no parametro
 offsets = [DateOffset(days=5), DateOffset(months=1), DateOffset(months=3), DateOffset(months=6), DateOffset(years=1), DateOffset(years=2)] 
